@@ -35,6 +35,17 @@ end
 
 if SERVER then
 
+hook.Add("TTT2SpecialRoleSyncing", "TTT2SwapperShowAsJester", function(ply, tbl)
+  if not ply or not IsValid(ply) or ply:GetTeam() ~= TEAM_TRAITOR or ply:GetSubRoleData().unknownTeam or GetRoundState() ~= ROUND_ACTIVE or not SWAPPER_DATA.CVARS.ttt2_swapper_jester_mode or not ROLE_JESTER then return end
+
+  local plys = GetRoleFilter(ROLE_SWAPPER, false)
+
+  for i = 1, #plys do
+    local p = plys[i]
+    tbl[p] = {ROLE_JESTER, TEAM_JESTER}
+  end
+end)
+
 hook.Add("PlayerDeath", "TTT2SwapperDeath", function(ply, inflictor, attacker)
   if GetRoundState() ~= ROUND_ACTIVE or ply:GetSubRole() ~= ROLE_SWAPPER or not attacker:IsPlayer() or attacker == ply then return end
 
@@ -45,8 +56,9 @@ hook.Add("PlayerDeath", "TTT2SwapperDeath", function(ply, inflictor, attacker)
 
   if not SWAPPER_DATA:ShouldSwapp(newRoleVictim) then return end
 
-  SWAPPER_DATA:HandleRespawnAttacker(attacker)
-  SWAPPER_DATA:HandleRespawnVictim(ply, newRoleVictim, newTeamVictim)
+
+  SWAPPER_DATA:HandleDeathAttacker(attacker)
+  SWAPPER_DATA:HandleDeathVictim(ply, newRoleVictim, newTeamVictim)
 
   SendFullStateUpdate()
 end)

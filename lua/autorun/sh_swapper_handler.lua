@@ -1,5 +1,7 @@
-SWAPPER_DATA = {}
-SWAPPER_DATA.CVARS = {}
+SWAPPER_DATA = SWAPPER_DATA or {}
+SWAPPER_DATA.CVARS = SWAPPER_DATA.CVARS or {}
+
+
 if SERVER then
 
 SWAPPER_DATA.roles_table = {}
@@ -32,7 +34,7 @@ function SWAPPER_DATA:AddExcludedRole(role)
 end
 
 
-function SWAPPER_DATA:HandleRespawnVictim(ply, role, team)
+function SWAPPER_DATA:HandleDeathVictim(ply, role, team)
   ply:SetRole(SWAPPER_DATA:GetRoleToRespawn(role), SWAPPER_DATA:GetTeamToRespawn(role, team))
 
   local spawnPos, eyeAngle = SWAPPER_DATA:GetRespawnLocation(ply)
@@ -41,7 +43,14 @@ function SWAPPER_DATA:HandleRespawnVictim(ply, role, team)
   ply:SendRevivalReason("ttt2_swapper_revivereason")
 end
 
-function SWAPPER_DATA:HandleRespawnAttacker(ply)
+function SWAPPER_DATA:HandleDeathAttacker(ply)
+  if not SWAPPER_DATA.CVARS.ttt2_swapper_respawn_attacker then
+    if SWAPPER_DATA.CVARS.ttt2_swapper_make_attacker_swapper then
+        ply:SetRole(ROLE_SWAPPER, TEAM_NONE)
+    end
+    return
+  end
+
   ply:SetRole(ROLE_SWAPPER, TEAM_NONE)
 
   local spawnPos, eyeAngle = SWAPPER_DATA:GetRespawnLocation(ply)
@@ -74,6 +83,7 @@ function SWAPPER_DATA:ShouldSwapp(role)
   return true
 end
 
+--Stripped out of TTT2 code :P
 function SWAPPER_DATA:GetRespawnLocation(ply)
   local spawnEntity = nil
   local spawnPos = nil
