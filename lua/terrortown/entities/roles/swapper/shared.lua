@@ -47,7 +47,7 @@ hook.Add("TTT2SpecialRoleSyncing", "TTT2SwapperShowAsJester", function(ply, tbl)
 end)
 
 hook.Add("PlayerDeath", "TTT2SwapperDeath", function(ply, inflictor, attacker)
-  if GetRoundState() ~= ROUND_ACTIVE or ply:GetSubRole() ~= ROLE_SWAPPER or not attacker:IsPlayer() or attacker == ply then return end
+  if GetRoundState() ~= ROUND_ACTIVE or ply:GetSubRole() ~= ROLE_SWAPPER or not attacker:IsPlayer() or not attacker:IsActive() or attacker == ply then return end
 
   attacker:Kill()
 

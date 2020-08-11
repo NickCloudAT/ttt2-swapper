@@ -39,7 +39,11 @@ function SWAPPER_DATA:HandleDeathVictim(ply, role, team)
 
   local spawnPos, eyeAngle = SWAPPER_DATA:GetRespawnLocation(ply)
 
-  ply:Revive(SWAPPER_DATA.CVARS.ttt2_swapper_respawn_time, function(ply) return IsValid(ply) and not ply:Alive() end, false, false, true, nil, spawnPos, eyeAngle)
+  ply:Revive(SWAPPER_DATA.CVARS.ttt2_swapper_respawn_time,
+  function(ply) ply:ResetConfirmPlayer() SendFullStateUpdate() end,
+  function() return IsValid(ply) and not ply:Alive() end,
+  false, true, nil, spawnPos, eyeAngle)
+
   ply:SendRevivalReason("ttt2_swapper_revivereason")
 end
 
@@ -55,7 +59,11 @@ function SWAPPER_DATA:HandleDeathAttacker(ply)
 
   local spawnPos, eyeAngle = SWAPPER_DATA:GetRespawnLocation(ply)
 
-  ply:Revive(SWAPPER_DATA.CVARS.ttt2_swapper_respawn_time, function(ply) return IsValid(ply) and not ply:Alive() end, false, false, false, nil, spawnPos, eyeAngle)
+  ply:Revive(SWAPPER_DATA.CVARS.ttt2_swapper_respawn_time,
+  function(ply) ply:ResetConfirmPlayer() SendFullStateUpdate() end,
+  function() return IsValid(ply) and not ply:Alive() end,
+  false, false, nil, spawnPos, eyeAngle)
+
   ply:SendRevivalReason("ttt2_swapper_revivereason")
 end
 
