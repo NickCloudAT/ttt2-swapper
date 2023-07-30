@@ -1,7 +1,8 @@
 if SERVER then
   AddCSLuaFile()
 
-  resource.AddFile("materials/vgui/ttt/dynamic/roles/icon_swapper_old.vmt")
+  resource.AddFile("materials/vgui/ttt/dynamic/roles/icon_swapper.vmt")
+  resource.AddFile("materials/vgui/ttt/dynamic/roles/icon_swapper.vtf")
 
 end
 
@@ -16,7 +17,7 @@ function ROLE:PreInitialize()
 	self.preventWin = false
 
 	roles.InitCustomTeam(self.name, {
-	    icon = 'vgui/ttt/dynamic/roles/icon_swapper_old',
+	    icon = 'vgui/ttt/dynamic/roles/icon_swapper',
 	    color = self.color
 	})
 	self.defaultTeam = TEAM_NONE

@@ -97,10 +97,10 @@ function SWAPPER_DATA:GetRespawnLocation(ply)
   local spawnPos = nil
   local spawnEyeAngle = nil
   if not SWAPPER_DATA.CVARS.ttt2_swapper_respawn_corpse then
-    spawnEntity = spawn.GetRandomPlayerSpawnEntity(ply)
+    spawnPoint = plyspawn.GetRandomSafePlayerSpawnPoint(ply)
 
-    spawnPos = spawnEntity:GetPos()
-    spawnEyeAngle = spawnEntity:EyeAngles()
+    spawnPos = spawnPoint.pos
+    spawnEyeAngle = spawnPoint.ang
   end
 
   return spawnPos, spawnEyeAngle
